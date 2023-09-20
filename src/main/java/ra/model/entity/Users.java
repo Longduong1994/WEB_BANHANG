@@ -35,13 +35,5 @@ public class Users {
             ,inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-    private List<Order> orders = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-    private List<Bill> bills = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="users")
-    private List<Review> reviews = new ArrayList<>();
 
 }

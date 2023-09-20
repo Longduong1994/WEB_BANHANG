@@ -16,10 +16,9 @@ import java.util.List;
 @Builder
 public class Category {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     @Column(name="category_name")
     private String name;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "categories")
-    private List<Product> products = new ArrayList<>();
+
 }

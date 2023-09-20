@@ -1,5 +1,6 @@
 package ra.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,13 +21,20 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "export_date")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date exportDate;
-    private double totalPrice;
-    private boolean status;
+    private String address;
+    private String phone;
+    private String other;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "status_id",referencedColumnName = "id")
+    private OrderStatus orderStatus;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users users;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "order")
-    private List<Cart> cartItems;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_id", referencedColumnName = "id")
+    private Payment payment;
 
 }

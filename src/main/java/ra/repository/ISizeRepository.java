@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository;
 import ra.model.entity.Size;
 @Repository
 public interface ISizeRepository extends JpaRepository<Size,Long> {
+    boolean existsByName(String name);
+
 }

@@ -2,7 +2,6 @@ package ra.service.impl.category;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ra.exception.CategoryException;
 import ra.model.dto.request.CategoryRequestDto;
 import ra.model.dto.response.CategoryResponseDto;
 import ra.model.entity.Category;
@@ -26,12 +25,12 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public CategoryResponseDto findById(Long id) {
+    public CategoryResponseDto findById(Long id) throws ClassCastException {
         Optional<Category> category = categoryRepository.findById(id);
         if(category.isPresent()) {
             return categoryMapper.toResponse(category.get());
         }
-        return null;
+        throw new ClassCastException("Could not find category");
     }
 
     @Override
@@ -51,12 +50,12 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public CategoryResponseDto delete(Long id) {
+    public CategoryResponseDto delete(Long id) throws ClassCastException {
         Optional<Category> catalog = categoryRepository.findById(id);
         if(catalog.isPresent()) {
             categoryRepository.deleteById(id);
             return categoryMapper.toResponse(catalog.get());
         }
-        return null;
+        throw new ClassCastException("Could not find category");
     }
 }

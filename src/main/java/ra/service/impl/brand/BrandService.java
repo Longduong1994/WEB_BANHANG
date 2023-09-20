@@ -25,16 +25,19 @@ public class BrandService implements IBrandService {
     }
 
     @Override
-    public BrandResponseDto findById(Long id) {
+    public BrandResponseDto findById(Long id) throws ClassCastException {
         Optional<Brand> brand = brandRepository.findById(id);
         if (brand.isPresent()) {
             return brandMapper.toResponse(brand.get());
         }
-        return null;
+        throw  new ClassCastException("Brand not found");
     }
 
     @Override
-    public BrandResponseDto save(BrandRequestDto brandRequestDto) {
+    public BrandResponseDto save(BrandRequestDto brandRequestDto) throws ClassCastException {
+        if(brandRepository.existsByName(brandRequestDto.getName())) {
+            throw new ClassCastException("Brand already exists");
+        }
         Brand brand = brandMapper.toEntity(brandRequestDto);
         return brandMapper.toResponse(brandRepository.save(brand));
     }
@@ -47,12 +50,12 @@ public class BrandService implements IBrandService {
     }
 
     @Override
-    public BrandResponseDto delete(Long id) {
+    public BrandResponseDto delete(Long id) throws ClassCastException {
         Optional<Brand> brand = brandRepository.findById(id);
         if (brand.isPresent()) {
             brandRepository.findById(id);
             return brandMapper.toResponse(brand.get());
         }
-        return null;
+        throw new ClassCastException("Could not find brand");
     }
 }

@@ -1,5 +1,6 @@
 package ra.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,10 +17,8 @@ import java.util.List;
 @Builder
 public class Color {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     @Column(name="color_name")
     private String name;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "colors")
-    private List<Product> products = new ArrayList<>();
 }

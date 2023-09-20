@@ -25,16 +25,19 @@ public class ColorService implements IColorService {
     }
 
     @Override
-    public ColorResponseDto findById(Long id) {
+    public ColorResponseDto findById(Long id) throws ClassCastException {
         Optional<Color> color = colorRepository.findById(id);
         if (color.isPresent()) {
             return colorMapper.toResponse(color.get());
         }
-        return null;
+        throw new ClassCastException("Color not found");
     }
 
     @Override
-    public ColorResponseDto save(ColorRequestDto colorRequestDto) {
+    public ColorResponseDto save(ColorRequestDto colorRequestDto) throws ClassCastException {
+        if (colorRepository.existsByName(colorRequestDto.getName())){
+            throw new ClassCastException("Color already exists");
+        }
         Color color = colorMapper.toEntity(colorRequestDto);
         return colorMapper.toResponse(colorRepository.save(color));
     }
@@ -47,12 +50,12 @@ public class ColorService implements IColorService {
     }
 
     @Override
-    public ColorResponseDto delete(Long id) {
+    public ColorResponseDto delete(Long id) throws ClassCastException{
         Optional<Color> color = colorRepository.findById(id);
         if (color.isPresent()) {
             colorRepository.deleteById(id);
             return colorMapper.toResponse(color.get());
         }
-        return null;
+        throw new ClassCastException("Could not find color");
     }
 }

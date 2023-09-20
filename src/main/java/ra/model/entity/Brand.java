@@ -16,10 +16,8 @@ import java.util.List;
 @Builder
 public class Brand {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "brand_name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "brand")
-    private List<Product> products = new ArrayList<>();
 }

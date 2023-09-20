@@ -17,12 +17,11 @@ public class Review {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private String comment;
-    private int rate;
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private Users users;
+    private Double rate;
+    private String writer;
 
     @ManyToOne
-    @JoinColumn(name="project_id")
-    private Product product;
+    @JoinColumn(name="order_detail_id")
+    private Cart cart;
+    private boolean status;
 }

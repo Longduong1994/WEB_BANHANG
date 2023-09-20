@@ -16,10 +16,8 @@ import java.util.List;
 @Builder
 public class Size {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     @Column(name="size_name")
     private String name;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "sizes")
-    private List<Product> products = new ArrayList<>();
 }

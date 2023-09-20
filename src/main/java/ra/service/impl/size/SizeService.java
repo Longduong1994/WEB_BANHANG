@@ -25,16 +25,19 @@ public class SizeService implements ISizeService {
     }
 
     @Override
-    public SizeResponseDto findById(Long id) {
+    public SizeResponseDto findById(Long id) throws ClassCastException {
         Optional<Size> size = sizeRepository.findById(id);
         if (size.isPresent()) {
             return sizeMapper.toResponse(size.get());
         }
-        return null;
+        throw new ClassCastException("Size not found");
     }
 
     @Override
-    public SizeResponseDto save(SizeRequestDto sizeRequestDto) {
+    public SizeResponseDto save(SizeRequestDto sizeRequestDto)throws ClassCastException {
+        if (sizeRepository.existsByName(sizeRequestDto.getName())){
+            throw new ClassCastException("Size already exists");
+        }
         Size size = sizeMapper.toEntity(sizeRequestDto);
         return sizeMapper.toResponse(sizeRepository.save(size));
     }
@@ -47,12 +50,12 @@ public class SizeService implements ISizeService {
     }
 
     @Override
-    public SizeResponseDto delete(Long id) {
+    public SizeResponseDto delete(Long id) throws ClassCastException{
         Optional<Size> size = sizeRepository.findById(id);
         if (size.isPresent()) {
             sizeRepository.deleteById(id);
             return sizeMapper.toResponse(size.get());
         }
-        return null;
+       throw new ClassCastException("Could not find size");
     }
 }
